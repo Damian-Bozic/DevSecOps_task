@@ -24,3 +24,5 @@ htmlcov/
 .DS_Store
 Thumbs.db
 
+# Variables
+.env

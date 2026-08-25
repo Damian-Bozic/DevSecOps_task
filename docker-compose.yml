@@ -2,11 +2,12 @@ services:
   app:
     build:
       context: .
-      dockerfile: Dockerfile
+      args:
+        APP_UID: ${APP_UID:-1000}
+        APP_GID: ${APP_GID:-1000}
     container_name: devsecops-app
     ports:
       - "8000:8000"
-    restart: unless-stopped
 
   loki:
     image: grafana/loki:3.5.0
