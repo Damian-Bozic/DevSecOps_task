@@ -3,14 +3,16 @@
 venv/
 env/
 
-# Python cache
+# Python
 __pycache__/
 *.py[cod]
+*.egg-info/
 
 # Pytest
 .pytest_cache/
 
-# Coverage
+# Test / coverage
+.pytest_cache/
 .coverage
 htmlcov/
 
@@ -21,3 +23,4 @@ htmlcov/
 # OS files
 .DS_Store
 Thumbs.db
+

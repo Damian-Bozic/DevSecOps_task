@@ -1,11 +1,21 @@
+import logging
+
 from fastapi import FastAPI, HTTPException, Query
+
+from app.logging_config import configure_logging
 from app.models import Product, ProductCreate, ProductUpdate
 from app.repository import products
+
+configure_logging()
+
+logger = logging.getLogger(__name__)
 
 app = FastAPI(
     title="DevSecOps CRUD API",
     version="1.0.0",
 )
+
+logger.info("Application started with %d products", len(products))
 
 @app.get("/health")
 def health_check():
@@ -32,6 +42,8 @@ def get_product(product_id: int):
     product = products.get(product_id)
 
     if product is None:
+        logger.warning("Product not found: %d", product_id)
+
         raise HTTPException(
             status_code=404,
             detail="Product not found",
@@ -50,6 +62,8 @@ def create_product(product_data: ProductCreate):
 
     products[new_id] = product
 
+    logger.info("Product created: %d", new_id)
+
     return product
 
 @app.put("/products/{product_id}")
@@ -58,6 +72,8 @@ def update_product(
     product_data: ProductUpdate,
 ):
     if product_id not in products:
+        logger.warning("Attempted operation on missing product: %d", product_id)
+
         raise HTTPException(
             status_code=404,
             detail="Product not found",
@@ -70,14 +86,20 @@ def update_product(
 
     products[product_id] = updated_product
 
+    logger.info("Product updated: %d", product_id)
+
     return updated_product
 
 @app.delete("/products/{product_id}", status_code=204)
 def delete_product(product_id: int):
     if product_id not in products:
+        logger.warning("Attempted operation on missing product: %d", product_id)
+
         raise HTTPException(
             status_code=404,
             detail="Product not found",
         )
 
     del products[product_id]
+
+    logger.info("Product deleted: %d", product_id)
