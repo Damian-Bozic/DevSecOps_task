@@ -8,8 +8,8 @@ version = "0.1.0"
 description = "Simple CRUD API with a DevSecOps environment"
 requires-python = ">=3.12"
 dependencies = [
-    "fastapi",
-    "uvicorn[standard]",
+    "fastapi==0.141.1",
+    "uvicorn[standard]==0.52.4",
 ]
 
 [tool.setuptools.packages.find]
