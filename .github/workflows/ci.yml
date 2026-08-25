@@ -33,7 +33,7 @@ jobs:
       - name: Run tests
         run: pytest
 
-security:
+  security:
     name: Dependency Security Scan
     runs-on: ubuntu-latest
 
